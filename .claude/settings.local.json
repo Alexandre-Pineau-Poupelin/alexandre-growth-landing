@@ -6,7 +6,8 @@
       "Bash(pip install *)",
       "Bash(python3 -m streamlit --version)",
       "Bash(python3 -m pip install streamlit -q)",
-      "Bash(python3 -m streamlit run /Users/alexandrepineaupoupelin/Developer/Claude/cv_site/app.py --server.headless true --server.port 8501)"
+      "Bash(python3 -m streamlit run /Users/alexandrepineaupoupelin/Developer/Claude/cv_site/app.py --server.headless true --server.port 8501)",
+      "Bash(pkill -f \"streamlit run\")"
     ]
   }
 }

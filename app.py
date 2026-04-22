@@ -7,630 +7,690 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ─── GLOBAL CSS ──────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════
+# DESIGN SYSTEM
+# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
 <style>
-  /* Reset & base */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap');
 
-  html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    background-color: #080c14;
-    color: #e2e8f0;
-  }
+:root {
+  --bg:    #06060b;
+  --surf:  #0c0c15;
+  --surf2: #111120;
+  --bdr:   rgba(255,255,255,0.07);
+  --bdr-a: rgba(99,102,241,0.38);
+  --acc:   #6366f1;
+  --acc-lo:rgba(99,102,241,0.1);
+  --vio:   #8b5cf6;
+  --cyn:   #22d3ee;
+  --t1:    #ededf5;
+  --t2:    #9090b8;
+  --t3:    #44445c;
+  --grn:   #22c55e;
+  --r:     12px;
+  --rL:    16px;
+  --f:     'Inter', -apple-system, sans-serif;
+}
 
-  /* Hide Streamlit chrome */
-  #MainMenu, footer, header { visibility: hidden; }
-  .block-container {
-    padding: 0 !important;
-    max-width: 100% !important;
-  }
+html, body,
+[data-testid="stApp"],
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+.stApp, .main, section.main {
+  background: var(--bg) !important;
+  color: var(--t1) !important;
+  font-family: var(--f) !important;
+}
 
-  /* ── Layout wrapper ── */
-  .page-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+#MainMenu, footer, header,
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="stHeader"] {
+  display: none !important;
+  visibility: hidden !important;
+}
 
-  /* ── Divider ── */
-  .section-divider {
-    border: none;
-    border-top: 1px solid #1e2a3a;
-    margin: 80px 0;
-  }
+.main .block-container,
+[data-testid="block-container"] {
+  max-width: 1204px !important;
+  padding: 0 52px !important;
+  margin: 0 auto !important;
+}
 
-  /* ── Section label ── */
-  .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #4a6fa5;
-    margin-bottom: 20px;
-  }
+/* Remove Streamlit's default markdown spacing */
+[data-testid="stMarkdown"] > div { margin-bottom: 0 !important; }
 
-  /* ── HERO ── */
-  .hero-wrapper {
-    padding: 120px 0 100px;
-  }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    border-radius: 100px;
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #818cf8;
-    margin-bottom: 36px;
-  }
-  .hero-badge::before {
-    content: '';
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    background: #4ade80;
-    border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(74,222,128,0.2);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,0.2); }
-    50%       { box-shadow: 0 0 0 6px rgba(74,222,128,0.05); }
-  }
-  .hero-name {
-    font-size: clamp(42px, 6vw, 68px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: #f8fafc;
-    margin: 0 0 12px;
-  }
-  .hero-title {
-    font-size: clamp(20px, 3vw, 28px);
-    font-weight: 600;
-    color: #6366f1;
-    margin: 0 0 28px;
-    letter-spacing: -0.01em;
-  }
-  .hero-subtitle {
-    font-size: 17px;
-    line-height: 1.7;
-    color: #94a3b8;
-    max-width: 580px;
-    margin: 0 0 48px;
-  }
-  .hero-subtitle strong { color: #e2e8f0; font-weight: 500; }
+/* ── Page width wrapper (passthrough — centering handled by block-container) ── */
+.w { max-width: 100%; margin: 0; padding: 0; }
 
-  /* ── Buttons ── */
-  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #6366f1;
-    color: #fff !important;
-    font-size: 14px; font-weight: 600;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: #4f46e5; transform: translateY(-1px); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: transparent;
-    color: #94a3b8 !important;
-    font-size: 14px; font-weight: 500;
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: 1px solid #1e2a3a;
-    text-decoration: none;
-    transition: border-color 0.2s, color 0.2s, transform 0.15s;
-  }
-  .btn-secondary:hover { border-color: #6366f1; color: #e2e8f0 !important; transform: translateY(-1px); }
+/* ── Section ── */
+.sec { padding: 96px 0; border-top: 1px solid var(--bdr); }
+.sec-last { padding: 96px 0 0; border-top: 1px solid var(--bdr); }
 
-  /* ── APPROCHE ── */
-  .approach-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 32px;
-  }
-  .approach-card {
-    background: #0d1520;
-    border: 1px solid #1e2a3a;
-    border-radius: 12px;
-    padding: 24px;
-    transition: border-color 0.2s;
-  }
-  .approach-card:hover { border-color: #6366f1; }
-  .approach-card-icon {
-    font-size: 22px;
-    margin-bottom: 12px;
-  }
-  .approach-card-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #f1f5f9;
-    margin-bottom: 8px;
-  }
-  .approach-card-desc {
-    font-size: 14px;
-    color: #64748b;
-    line-height: 1.6;
-  }
+/* ── Eyebrow ── */
+.ey {
+  display: block;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--acc); margin-bottom: 16px; line-height: 1.4;
+}
 
-  /* ── PROJET REVOLTE ── */
-  .project-wrapper {
-    background: linear-gradient(135deg, #0d1520 0%, #0f1b2d 100%);
-    border: 1px solid #1e2a3a;
-    border-radius: 16px;
-    padding: 48px;
-    position: relative;
-    overflow: hidden;
-  }
-  .project-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
-  }
-  .project-tag {
-    display: inline-block;
-    background: rgba(99,102,241,0.12);
-    border: 1px solid rgba(99,102,241,0.25);
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #818cf8;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .project-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: #f8fafc;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
-  }
-  .project-subtitle {
-    font-size: 15px;
-    color: #64748b;
-    margin-bottom: 32px;
-  }
-  .metrics-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin: 32px 0;
-  }
-  .metric-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid #1e2a3a;
-    border-radius: 10px;
-    padding: 20px 16px;
-    text-align: center;
-  }
-  .metric-value {
-    font-size: 28px;
-    font-weight: 800;
-    color: #f8fafc;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-  .metric-accent { color: #6366f1; }
-  .metric-label {
-    font-size: 12px;
-    color: #475569;
-    margin-top: 6px;
-    font-weight: 500;
-  }
-  .project-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .project-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
-    color: #94a3b8;
-    line-height: 1.5;
-  }
-  .project-list li::before {
-    content: '→';
-    color: #6366f1;
-    font-weight: 600;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+/* ── Headings ── */
+.h2 {
+  font-size: clamp(28px, 3.3vw, 40px);
+  font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.028em;
+  color: var(--t1); margin-bottom: 12px;
+}
+.sdesc {
+  font-size: 16px; color: var(--t2);
+  line-height: 1.72; max-width: 540px;
+  font-weight: 400; letter-spacing: -0.008em;
+}
 
-  /* ── COMPÉTENCES ── */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 32px;
-  }
-  .skill-group {
-    background: #0d1520;
-    border: 1px solid #1e2a3a;
-    border-radius: 12px;
-    padding: 28px;
-  }
-  .skill-group-title {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #6366f1;
-    margin-bottom: 16px;
-  }
-  .skill-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: #94a3b8;
-    padding: 6px 0;
-    border-bottom: 1px solid #111827;
-  }
-  .skill-item:last-child { border-bottom: none; }
-  .skill-dot {
-    width: 5px; height: 5px;
-    background: #6366f1;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero { padding: 110px 0 96px; }
 
-  /* ── STACK ── */
-  .stack-section { margin-top: 32px; }
-  .stack-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
-  }
-  .stack-pill {
-    background: #0d1520;
-    border: 1px solid #1e2a3a;
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #94a3b8;
-    transition: border-color 0.2s, color 0.2s;
-    cursor: default;
-  }
-  .stack-pill:hover { border-color: #6366f1; color: #e2e8f0; }
+.badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(34,197,94,0.07);
+  border: 1px solid rgba(34,197,94,0.18);
+  border-radius: 100px;
+  padding: 8px 18px; margin-bottom: 42px;
+  font-size: 13px; font-weight: 500; color: #86efac; line-height: 1.4;
+}
+.bdot {
+  display: inline-block; width: 7px; height: 7px;
+  background: var(--grn); border-radius: 50%; flex-shrink: 0;
+  animation: pdot 2.8s ease infinite;
+}
+@keyframes pdot {
+  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50%      { box-shadow: 0 0 0 7px rgba(34,197,94,0); }
+}
+.hero-role {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--acc); margin-bottom: 18px; line-height: 1.4;
+}
+.hero-name {
+  font-size: clamp(48px, 7vw, 86px);
+  font-weight: 800; line-height: 0.97;
+  letter-spacing: -0.044em; color: var(--t1); margin-bottom: 28px;
+}
+.hero-val {
+  font-size: clamp(17px, 1.9vw, 20px);
+  line-height: 1.72; color: var(--t2);
+  max-width: 580px; margin-bottom: 52px;
+  font-weight: 400; letter-spacing: -0.01em;
+}
+.hero-val strong { color: var(--t1); font-weight: 500; }
 
-  /* ── OBJECTIF ── */
-  .objectif-wrapper {
-    background: linear-gradient(135deg, #0d1520 0%, #100d1f 100%);
-    border: 1px solid #1e2a3a;
-    border-radius: 16px;
-    padding: 48px;
-    text-align: center;
-  }
-  .objectif-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #f8fafc;
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-  }
-  .objectif-desc {
-    font-size: 16px;
-    color: #64748b;
-    max-width: 520px;
-    margin: 0 auto 28px;
-    line-height: 1.7;
-  }
-  .role-pills {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-  }
-  .role-pill {
-    background: rgba(99,102,241,0.1);
-    border: 1px solid rgba(99,102,241,0.25);
-    border-radius: 100px;
-    padding: 8px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #818cf8;
+.btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.btn-p {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--acc); color: #fff !important;
+  font-size: 14px; font-weight: 600;
+  padding: 14px 28px; border-radius: 8px;
+  text-decoration: none !important; letter-spacing: -0.012em;
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+.btn-p:hover { background: #4f46e5; transform: translateY(-1px); box-shadow: 0 12px 32px rgba(99,102,241,0.3); }
+.btn-s {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--t2) !important;
+  font-size: 14px; font-weight: 500;
+  padding: 14px 28px; border-radius: 8px;
+  border: 1px solid var(--bdr);
+  text-decoration: none !important; letter-spacing: -0.012em;
+  transition: border-color .2s, color .2s, transform .15s;
+}
+.btn-s:hover { border-color: var(--bdr-a); color: var(--t1) !important; transform: translateY(-1px); }
+
+/* ══════════════════════════════
+   APPROACH CARDS
+══════════════════════════════ */
+.cards { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 44px; }
+.card {
+  flex: 1 1 calc(50% - 7px); min-width: 280px;
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: var(--rL); padding: 30px 32px;
+  transition: border-color .25s, background .2s;
+}
+.card:hover { border-color: rgba(99,102,241,0.28); background: var(--surf2); }
+.c-ico { font-size: 22px; display: block; margin-bottom: 14px; line-height: 1; }
+.c-ttl { font-size: 15px; font-weight: 600; color: var(--t1); margin-bottom: 8px; letter-spacing: -0.01em; line-height: 1.35; }
+.c-dsc { font-size: 14px; color: var(--t2); line-height: 1.65; }
+
+/* ══════════════════════════════
+   PROJET CLÉ — Native Streamlit elements
+══════════════════════════════ */
+
+/* st.divider() → <hr> : section separator */
+hr {
+  border: none !important;
+  border-top: 1px solid var(--bdr) !important;
+  margin: 0 !important;
+}
+
+/* Eyebrow from ##### markdown */
+h5 {
+  font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: 0.18em !important; text-transform: uppercase !important;
+  color: var(--acc) !important; margin: 0 0 12px !important; line-height: 1.4 !important;
+}
+
+/* Section title from ### markdown */
+h3 {
+  font-size: clamp(26px, 3vw, 36px) !important;
+  font-weight: 700 !important; line-height: 1.1 !important;
+  letter-spacing: -0.028em !important;
+  color: var(--t1) !important; margin: 4px 0 16px !important;
+}
+
+/* Description paragraph (no class = native markdown) */
+p:not([class]) {
+  color: var(--t2) !important; font-size: 16px !important;
+  line-height: 1.72 !important; letter-spacing: -0.008em !important;
+}
+
+/* Actions sub-label: lone **bold** in a paragraph */
+[data-testid="stMarkdown"] p strong:only-child {
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 0.16em !important; text-transform: uppercase !important;
+  color: var(--t3) !important;
+}
+
+/* st.metric() card */
+[data-testid="stMetric"] {
+  background: var(--surf) !important;
+  border: 1px solid var(--bdr) !important;
+  border-radius: var(--r) !important;
+  padding: 28px 20px !important;
+  text-align: center !important;
+}
+[data-testid="stMetricValue"] div {
+  font-size: 32px !important; font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  color: var(--t1) !important; line-height: 1 !important;
+}
+[data-testid="stMetricLabel"] {
+  font-size: 12px !important; font-weight: 500 !important;
+  color: var(--t3) !important; text-align: center !important;
+  letter-spacing: 0.03em !important; text-transform: uppercase !important;
+}
+[data-testid="stMetricDelta"] { display: none !important; }
+
+/* Action list from st.markdown("- item") */
+[data-testid="stMarkdown"] ul {
+  padding: 0 !important; margin: 0 !important;
+  list-style: none !important;
+}
+[data-testid="stMarkdown"] ul li {
+  padding: 9px 0 !important;
+  color: var(--t2) !important; font-size: 14px !important;
+  line-height: 1.6 !important; letter-spacing: -0.008em !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  list-style-type: '→  ' !important;
+}
+[data-testid="stMarkdown"] ul li:last-child { border-bottom: none !important; }
+
+/* ══════════════════════════════
+   COMPÉTENCES
+══════════════════════════════ */
+.skills { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 44px; }
+.sg {
+  flex: 1 1 calc(50% - 7px); min-width: 280px;
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: var(--rL); padding: 30px 32px;
+}
+.sg-lbl {
+  display: block; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--acc); margin-bottom: 20px; line-height: 1.4;
+}
+.sr {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: var(--t2);
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  line-height: 1.45; letter-spacing: -0.008em;
+}
+.sr:last-child { border-bottom: none; }
+.sd { width: 5px; height: 5px; background: var(--acc); border-radius: 50%; flex-shrink: 0; opacity: 0.65; }
+
+/* ══════════════════════════════
+   STACK
+══════════════════════════════ */
+.pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+.pill {
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: 8px; padding: 11px 20px;
+  font-size: 14px; font-weight: 500; color: var(--t2);
+  transition: border-color .2s, color .2s;
+  cursor: default; letter-spacing: -0.012em; line-height: 1.4;
+}
+.pill:hover { border-color: var(--bdr-a); color: var(--t1); }
+
+/* ══════════════════════════════
+   OBJECTIF
+══════════════════════════════ */
+.obj {
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: var(--rL);
+  padding: 70px 48px; text-align: center;
+}
+.obj-h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700; letter-spacing: -0.028em;
+  color: var(--t1); margin-bottom: 18px; line-height: 1.12;
+}
+.obj-sub {
+  font-size: 17px; color: var(--t2);
+  line-height: 1.72; max-width: 500px;
+  margin: 0 auto 36px; letter-spacing: -0.01em;
+}
+.rpills { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+.rpill {
+  background: var(--acc-lo); border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 100px; padding: 9px 22px;
+  font-size: 14px; font-weight: 600; color: #a5b4fc; letter-spacing: -0.012em; line-height: 1.4;
+}
+
+/* ══════════════════════════════
+   CONTACT
+══════════════════════════════ */
+.contacts { display: flex; gap: 14px; margin-top: 44px; }
+.cc {
+  flex: 1;
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: var(--rL); padding: 34px 24px;
+  text-align: center; text-decoration: none; display: block;
+  transition: border-color .2s, transform .15s, background .2s;
+}
+.cc:hover { border-color: rgba(99,102,241,0.3); background: var(--surf2); transform: translateY(-2px); }
+.cc-ico { font-size: 28px; margin-bottom: 16px; display: block; line-height: 1; }
+.cc-lbl {
+  display: block; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 10px; line-height: 1.4;
+}
+.cc-val { font-size: 14px; color: var(--acc); font-weight: 500; line-height: 1.5; }
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.foot {
+  border-top: 1px solid var(--bdr);
+  margin-top: 96px; padding: 40px 0;
+  text-align: center; font-size: 13px;
+  color: var(--t3); letter-spacing: 0.02em; line-height: 1.4;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE — tablet (≤ 900px)
+══════════════════════════════ */
+@media (max-width: 900px) {
+  .main .block-container,
+  [data-testid="block-container"] {
+    padding: 0 32px !important;
   }
 
-  /* ── CONTACT ── */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 32px;
-  }
-  .contact-card {
-    background: #0d1520;
-    border: 1px solid #1e2a3a;
-    border-radius: 12px;
-    padding: 24px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    transition: border-color 0.2s, transform 0.15s;
-  }
-  .contact-card:hover { border-color: #6366f1; transform: translateY(-2px); }
-  .contact-card-icon { font-size: 24px; margin-bottom: 12px; }
-  .contact-card-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 6px;
-  }
-  .contact-card-value {
-    font-size: 14px;
-    color: #6366f1;
-    font-weight: 500;
+  .sec, .sec-last { padding: 72px 0; }
+
+  .h2 { font-size: 28px !important; }
+
+  .cards, .skills { gap: 12px; }
+  .card, .sg { flex: 1 1 100% !important; min-width: 0 !important; }
+
+  .contacts { flex-wrap: wrap; gap: 12px; }
+  .cc { flex: 1 1 calc(50% - 6px) !important; min-width: 0 !important; }
+
+  .obj { padding: 52px 36px; }
+  .obj-h2 { font-size: 28px !important; }
+
+  .rpills { gap: 8px; margin-bottom: 32px; }
+
+  .foot { margin-top: 72px; }
+}
+
+/* ══════════════════════════════
+   RESPONSIVE — mobile (≤ 640px)
+══════════════════════════════ */
+@media (max-width: 640px) {
+  /* Layout */
+  .main .block-container,
+  [data-testid="block-container"] {
+    padding: 0 20px !important;
   }
 
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    padding: 60px 0 40px;
-    font-size: 13px;
-    color: #1e2a3a;
+  /* Sections */
+  .sec, .sec-last { padding: 60px 0; }
+
+  /* Hero */
+  .hero { padding: 72px 0 56px; }
+  .hero-name { font-size: 40px !important; letter-spacing: -0.035em !important; }
+  .hero-val  { font-size: 16px !important; margin-bottom: 40px !important; }
+  .badge     { font-size: 12px !important; padding: 7px 14px !important; }
+  .btns      { flex-direction: column; gap: 10px; }
+  .btn-p, .btn-s { justify-content: center; width: 100%; max-width: 320px; }
+
+  /* Headings */
+  .h2  { font-size: 24px !important; }
+  h3   { font-size: 22px !important; }
+  h5   { font-size: 11px !important; }
+
+  /* Description */
+  p:not([class]) { font-size: 15px !important; }
+
+  /* Approach cards → 1 column */
+  .cards { flex-direction: column; }
+  .card  { flex: 1 1 100% !important; min-width: 0 !important; padding: 24px; }
+
+  /* Skills → 1 column */
+  .skills { flex-direction: column; }
+  .sg     { flex: 1 1 100% !important; min-width: 0 !important; padding: 24px; }
+
+  /* Pills */
+  .pills { gap: 8px; margin-top: 24px; }
+  .pill  { padding: 9px 16px !important; font-size: 13px !important; }
+
+  /* Objectif */
+  .obj    { padding: 44px 20px; }
+  .obj-h2 { font-size: 24px !important; }
+  .obj-sub { font-size: 15px !important; margin-bottom: 28px; }
+  .rpills { flex-direction: column; align-items: center; }
+  .rpill  { width: 100%; max-width: 280px; text-align: center; }
+  .btns[style*="justify-content:center"] { align-items: center; }
+
+  /* Contact → 1 column */
+  .contacts { flex-direction: column; }
+  .cc { flex: 1 1 100% !important; padding: 28px 20px; }
+
+  /* Native Streamlit columns → stack on mobile */
+  [data-testid="stHorizontalBlock"] {
+    flex-wrap: wrap !important;
+  }
+  [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+    min-width: calc(50% - 7px) !important;
+    flex: 1 1 calc(50% - 7px) !important;
   }
 
-  /* ── Section headings ── */
-  .section-heading {
-    font-size: clamp(24px, 3.5vw, 34px);
-    font-weight: 700;
-    color: #f8fafc;
-    letter-spacing: -0.025em;
-    margin: 0 0 10px;
+  /* Footer */
+  .foot { margin-top: 60px; padding: 32px 0; font-size: 12px; }
+}
+
+/* ══════════════════════════════
+   RESPONSIVE — small mobile (≤ 420px)
+══════════════════════════════ */
+@media (max-width: 420px) {
+  .main .block-container,
+  [data-testid="block-container"] {
+    padding: 0 16px !important;
   }
-  .section-sub {
-    font-size: 16px;
-    color: #64748b;
-    margin: 0 0 4px;
-    line-height: 1.6;
+
+  .hero-name { font-size: 34px !important; }
+
+  /* Metric columns → 2×2 grid */
+  [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+    min-width: calc(50% - 7px) !important;
+    flex: 1 1 calc(50% - 7px) !important;
   }
+
+  [data-testid="stMetric"] { padding: 20px 12px !important; }
+  [data-testid="stMetricValue"] div { font-size: 26px !important; }
+}
 </style>
 """, unsafe_allow_html=True)
 
-# ─── HERO ────────────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════
+# HERO
+# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
-<div class="page-wrapper">
-  <div class="hero-wrapper">
-    <div class="hero-badge">Disponible · Ouvert aux opportunités CDI</div>
+<div class="w">
+  <div class="hero">
+    <div class="badge"><span class="bdot"></span>Disponible &middot; Ouvert aux opportunités CDI</div>
+    <p class="hero-role">Growth Systems Engineer</p>
     <h1 class="hero-name">Alexandre<br>Pineau-Poupelin</h1>
-    <p class="hero-title">Growth Systems Engineer</p>
-    <p class="hero-subtitle">
-      Je conçois des <strong>systèmes d'acquisition multi-canaux</strong> — inbound, outbound, automation —
-      qui génèrent, qualifient et convertissent des leads en revenu.<br><br>
-      Approche orientée <strong>performance</strong>, automatisation et scalabilité.
+    <p class="hero-val">
+      Je conçois des <strong>systèmes d&rsquo;acquisition multi-canaux</strong> &mdash; inbound, outbound, automation &mdash;
+      qui génèrent, qualifient et convertissent des leads en revenu.<br>
+      Approche orientée <strong>performance, automatisation et scalabilité</strong>.
     </p>
-    <div class="btn-row">
-      <a href="#projet" class="btn-primary">⚡ Voir le projet clé</a>
-      <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-secondary">✉ Me contacter</a>
+    <div class="btns">
+      <a href="#projet" class="btn-p">&#9889; Voir le projet clé</a>
+      <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-s">Me contacter &rarr;</a>
     </div>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ─── APPROCHE ────────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════
+# APPROCHE
+# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
-<div class="page-wrapper">
-  <hr class="section-divider">
-  <p class="section-label">Approche</p>
-  <h2 class="section-heading">Je construis des systèmes,<br>pas des campagnes</h2>
-  <p class="section-sub">
-    Chaque levier est pensé en relation avec les autres — acquisition, qualification,
-    conversion, revenu forment un seul système cohérent.
-  </p>
-  <div class="approach-grid">
-    <div class="approach-card">
-      <div class="approach-card-icon">🔗</div>
-      <div class="approach-card-title">Système end-to-end</div>
-      <div class="approach-card-desc">Acquisition → qualification → conversion → revenu. Chaque étape est connectée et mesurée.</div>
-    </div>
-    <div class="approach-card">
-      <div class="approach-card-icon">⚙️</div>
-      <div class="approach-card-title">Automatisation sans friction</div>
-      <div class="approach-card-desc">Workflows orchestrés via n8n et APIs pour scaler sans dépendance aux ressources humaines.</div>
-    </div>
-    <div class="approach-card">
-      <div class="approach-card-icon">📊</div>
-      <div class="approach-card-title">Data-driven</div>
-      <div class="approach-card-desc">Chaque décision s'appuie sur la donnée. Pas de vanity metrics — que du pipeline et du revenu.</div>
-    </div>
-    <div class="approach-card">
-      <div class="approach-card-icon">🔁</div>
-      <div class="approach-card-title">Itération continue</div>
-      <div class="approach-card-desc">Test → mesure → optimisation. Cycle court pour valider rapidement et capitaliser sur ce qui fonctionne.</div>
-    </div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-# ─── PROJET REVOLTE ──────────────────────────────────────────────────────────
-
-st.markdown("""
-<div class="page-wrapper">
-  <hr class="section-divider">
-  <p class="section-label">Projet clé</p>
-  <div class="project-wrapper" id="projet">
-    <div class="project-tag">Cas concret · B2B · PME Tech</div>
-    <h2 class="project-title">Revolte — Système d'acquisition B2B automatisé</h2>
-    <p class="project-subtitle">Structuration complète de l'acquisition dans une PME tech (mobilité électrique) avec un objectif de pipeline qualifié et scalable.</p>
-
-    <div class="metrics-row">
-      <div class="metric-card">
-        <div class="metric-value">322</div>
-        <div class="metric-label">MQL générés</div>
+<div class="w">
+  <div class="sec">
+    <span class="ey">Approche</span>
+    <h2 class="h2">Je construis des systèmes, pas des campagnes</h2>
+    <p class="sdesc">Chaque levier est pensé en relation avec les autres &mdash; acquisition, qualification, conversion, revenu forment un seul système cohérent.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="c-ico">🔗</span>
+        <div class="c-ttl">Système end-to-end</div>
+        <div class="c-dsc">Acquisition &rarr; qualification &rarr; conversion &rarr; revenu. Chaque étape est connectée et mesurée.</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-value">24</div>
-        <div class="metric-label">Clients signés</div>
+      <div class="card">
+        <span class="c-ico">⚙️</span>
+        <div class="c-ttl">Automatisation sans friction</div>
+        <div class="c-dsc">Workflows orchestrés via n8n et APIs pour scaler sans dépendance aux ressources humaines.</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-value metric-accent">368K€</div>
-        <div class="metric-label">CA généré</div>
+      <div class="card">
+        <span class="c-ico">📊</span>
+        <div class="c-ttl">Data-driven</div>
+        <div class="c-dsc">Chaque décision s&rsquo;appuie sur la donnée. Pas de vanity metrics &mdash; que du pipeline et du revenu.</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-value">7,45<span style="font-size:18px;color:#475569">%</span></div>
-        <div class="metric-label">Taux MQL → client</div>
+      <div class="card">
+        <span class="c-ico">🔁</span>
+        <div class="c-ttl">Itération continue</div>
+        <div class="c-dsc">Test &rarr; mesure &rarr; optimisation. Cycle court pour valider rapidement et capitaliser sur ce qui fonctionne.</div>
       </div>
     </div>
-
-    <ul class="project-list">
-      <li>Sourcing multi-sources + enrichissement data</li>
-      <li>Segmentation par ICP + lead scoring</li>
-      <li>Séquences email automatisées</li>
-      <li>Activation multicanale (email + calls)</li>
-      <li>Intégration CRM HubSpot complète</li>
-      <li>Orchestration des workflows via n8n</li>
-      <li>Alignement marketing → sales</li>
-      <li>Transmission de leads qualifiés en temps réel</li>
-    </ul>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ─── COMPÉTENCES ─────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════
+# PROJET REVOLTE
+# ══════════════════════════════════════════════════════════════
+
+# ══════════════════════════════════════════════════════════════
+# PROJET CLÉ — 100 % native Streamlit
+# ══════════════════════════════════════════════════════════════
+
+st.divider()
+
+st.markdown("##### Cas concret · B2B · PME Tech")
+st.markdown("### Construction d'un système d'acquisition B2B automatisé")
+st.markdown(
+    "Structuration complète de l'acquisition dans une PME tech (mobilité électrique) "
+    "avec un objectif de pipeline qualifié et scalable."
+)
+
+st.write("")
+
+# ── Métriques ──
+_m1, _m2, _m3, _m4 = st.columns(4)
+_m1.metric("MQL générés",        "322")
+_m2.metric("Clients signés",     "24")
+_m3.metric("CA généré",          "368 K€")
+_m4.metric("Taux MQL → client",  "7,45 %")
+
+st.write("")
+st.markdown("**Ce que j'ai mis en place**")
+st.write("")
+
+# ── Actions (2 colonnes) ──
+_a1, _a2 = st.columns(2)
+with _a1:
+    st.markdown(
+        "- Sourcing multi-sources + enrichissement data\n"
+        "- Segmentation par ICP + lead scoring\n"
+        "- Séquences email automatisées\n"
+        "- Activation multicanale (email + calls)"
+    )
+with _a2:
+    st.markdown(
+        "- Intégration CRM HubSpot complète\n"
+        "- Orchestration des workflows via n8n\n"
+        "- Alignement marketing → sales\n"
+        "- Transmission des leads qualifiés en temps réel"
+    )
+
+st.write("")
+
+
+# ══════════════════════════════════════════════════════════════
+# COMPÉTENCES
+# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
-<div class="page-wrapper">
-  <hr class="section-divider">
-  <p class="section-label">Compétences</p>
-  <h2 class="section-heading">Ce que je maîtrise</h2>
-  <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-title">Acquisition</div>
-      <div class="skill-item"><span class="skill-dot"></span>Google Ads (Search, Performance Max)</div>
-      <div class="skill-item"><span class="skill-dot"></span>SEO (stratégie + contenu)</div>
-      <div class="skill-item"><span class="skill-dot"></span>Outbound (cold email, LinkedIn)</div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Automation</div>
-      <div class="skill-item"><span class="skill-dot"></span>n8n (workflows complexes)</div>
-      <div class="skill-item"><span class="skill-dot"></span>CRM automation (HubSpot)</div>
-      <div class="skill-item"><span class="skill-dot"></span>Enrichissement data & APIs</div>
-      <div class="skill-item"><span class="skill-dot"></span>Intégrations IA (LLMs)</div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Funnel & Conversion</div>
-      <div class="skill-item"><span class="skill-dot"></span>Structuration MQL → SQL → clients</div>
-      <div class="skill-item"><span class="skill-dot"></span>Optimisation de conversion</div>
-      <div class="skill-item"><span class="skill-dot"></span>UX & parcours utilisateur</div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Data</div>
-      <div class="skill-item"><span class="skill-dot"></span>Tracking (GA4, GTM)</div>
-      <div class="skill-item"><span class="skill-dot"></span>Analyse de performance</div>
-      <div class="skill-item"><span class="skill-dot"></span>Dashboarding & reporting</div>
-    </div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-# ─── STACK ───────────────────────────────────────────────────────────────────
-
-st.markdown("""
-<div class="page-wrapper">
-  <hr class="section-divider">
-  <p class="section-label">Stack</p>
-  <h2 class="section-heading">Outils & technologies</h2>
-  <p class="section-sub">Les outils que j'utilise quotidiennement pour concevoir et opérer des systèmes d'acquisition.</p>
-  <div class="stack-pills">
-    <span class="stack-pill">⚙️ n8n</span>
-    <span class="stack-pill">🔶 HubSpot</span>
-    <span class="stack-pill">📢 Google Ads</span>
-    <span class="stack-pill">🔍 SEO</span>
-    <span class="stack-pill">📧 Brevo</span>
-    <span class="stack-pill">📊 GA4 + GTM</span>
-    <span class="stack-pill">🤖 LLMs / IA</span>
-    <span class="stack-pill">🔌 APIs data</span>
-    <span class="stack-pill">📋 Clay</span>
-    <span class="stack-pill">📱 LinkedIn Sales Nav</span>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-# ─── OBJECTIF ────────────────────────────────────────────────────────────────
-
-st.markdown("""
-<div class="page-wrapper">
-  <hr class="section-divider">
-  <div class="objectif-wrapper">
-    <p class="section-label" style="text-align:center;">Objectif</p>
-    <h2 class="objectif-title">Prêt à construire le prochain<br>système d'acquisition</h2>
-    <p class="objectif-desc">
-      Je recherche un CDI dans une startup ou scale-up avec de vrais enjeux d'acquisition et
-      de structuration du funnel — là où il reste des systèmes à construire, pas à maintenir.
-    </p>
-    <div class="role-pills">
-      <span class="role-pill">Growth Engineer</span>
-      <span class="role-pill">Automation Engineer</span>
-      <span class="role-pill">Growth Systems Engineer</span>
-    </div>
-    <div class="btn-row" style="justify-content:center;">
-      <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-primary">✉ Discutons-en</a>
-      <a href="https://linkedin.com/in/alexandre-pineau-poupelin" class="btn-secondary">LinkedIn →</a>
+<div class="w">
+  <div class="sec">
+    <span class="ey">Compétences</span>
+    <h2 class="h2">Ce que je maîtrise</h2>
+    <div class="skills">
+      <div class="sg">
+        <span class="sg-lbl">Acquisition</span>
+        <div class="sr"><span class="sd"></span>Google Ads (Search, Performance Max)</div>
+        <div class="sr"><span class="sd"></span>SEO (stratégie + contenu)</div>
+        <div class="sr"><span class="sd"></span>Outbound (cold email, LinkedIn)</div>
+      </div>
+      <div class="sg">
+        <span class="sg-lbl">Automation</span>
+        <div class="sr"><span class="sd"></span>n8n (workflows complexes)</div>
+        <div class="sr"><span class="sd"></span>CRM automation (HubSpot)</div>
+        <div class="sr"><span class="sd"></span>Enrichissement data &amp; APIs</div>
+        <div class="sr"><span class="sd"></span>Intégrations IA (LLMs)</div>
+      </div>
+      <div class="sg">
+        <span class="sg-lbl">Funnel &amp; Conversion</span>
+        <div class="sr"><span class="sd"></span>Structuration MQL &rarr; SQL &rarr; clients</div>
+        <div class="sr"><span class="sd"></span>Optimisation de conversion</div>
+        <div class="sr"><span class="sd"></span>UX &amp; parcours utilisateur</div>
+      </div>
+      <div class="sg">
+        <span class="sg-lbl">Data</span>
+        <div class="sr"><span class="sd"></span>Tracking (GA4, GTM)</div>
+        <div class="sr"><span class="sd"></span>Analyse de performance</div>
+        <div class="sr"><span class="sd"></span>Dashboarding &amp; reporting</div>
+      </div>
     </div>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ─── CONTACT ─────────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════
+# STACK
+# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
-<div class="page-wrapper">
-  <hr class="section-divider">
-  <p class="section-label">Contact</p>
-  <h2 class="section-heading">Prenons contact</h2>
-  <p class="section-sub">Disponible pour des échanges sur des projets growth, automation ou systèmes d'acquisition.</p>
-  <div class="contact-grid">
-    <a class="contact-card" href="mailto:alexandre.pineaupoupelin@gmail.com">
-      <div class="contact-card-icon">✉️</div>
-      <div class="contact-card-label">Email</div>
-      <div class="contact-card-value">alexandre.pineaupoupelin@gmail.com</div>
-    </a>
-    <a class="contact-card" href="https://linkedin.com/in/alexandre-pineau-poupelin" target="_blank">
-      <div class="contact-card-icon">💼</div>
-      <div class="contact-card-label">LinkedIn</div>
-      <div class="contact-card-value">Voir le profil →</div>
-    </a>
-    <a class="contact-card" href="tel:+33600000000">
-      <div class="contact-card-icon">📞</div>
-      <div class="contact-card-label">Téléphone</div>
-      <div class="contact-card-value">Sur demande</div>
-    </a>
+<div class="w">
+  <div class="sec">
+    <span class="ey">Stack</span>
+    <h2 class="h2">Outils &amp; technologies</h2>
+    <p class="sdesc">Les outils que j&rsquo;utilise quotidiennement pour concevoir et opérer des systèmes d&rsquo;acquisition.</p>
+    <div class="pills">
+      <span class="pill">⚙️&nbsp; n8n</span>
+      <span class="pill">🔶&nbsp; HubSpot</span>
+      <span class="pill">📢&nbsp; Google Ads</span>
+      <span class="pill">🔍&nbsp; SEO</span>
+      <span class="pill">📧&nbsp; Brevo</span>
+      <span class="pill">📊&nbsp; GA4 + GTM</span>
+      <span class="pill">🤖&nbsp; LLMs / IA</span>
+      <span class="pill">🔌&nbsp; APIs data</span>
+    </div>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ─── FOOTER ──────────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════
+# OBJECTIF
+# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
-<div class="page-wrapper">
-  <div class="footer">
-    Alexandre Pineau-Poupelin · Growth Systems Engineer · 2025
+<div class="w">
+  <div class="sec">
+    <div class="obj">
+      <span class="ey" style="text-align:center;">Objectif</span>
+      <h2 class="obj-h2">Prêt à construire le prochain<br>système d&rsquo;acquisition</h2>
+      <p class="obj-sub">Je recherche un CDI dans une startup ou scale-up avec de vrais enjeux d&rsquo;acquisition &mdash; là où il reste des systèmes à construire, pas à maintenir.</p>
+      <div class="rpills">
+        <span class="rpill">Growth Engineer</span>
+        <span class="rpill">Automation Engineer</span>
+        <span class="rpill">Growth Systems Engineer</span>
+      </div>
+      <div class="btns" style="justify-content:center;">
+        <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-p">&#9993; Discutons-en</a>
+        <a href="https://linkedin.com/in/alexandre-pineau-poupelin" class="btn-s">LinkedIn &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ══════════════════════════════════════════════════════════════
+# CONTACT
+# ══════════════════════════════════════════════════════════════
+
+st.markdown("""
+<div class="w">
+  <div class="sec-last">
+    <span class="ey">Contact</span>
+    <h2 class="h2">Prenons contact</h2>
+    <p class="sdesc">Disponible pour des échanges sur des projets growth, automation ou systèmes d&rsquo;acquisition.</p>
+    <div class="contacts">
+      <a class="cc" href="mailto:alexandre.pineaupoupelin@gmail.com">
+        <span class="cc-ico">&#9993;&#65039;</span>
+        <span class="cc-lbl">Email</span>
+        <span class="cc-val">alexandre.pineaupoupelin@gmail.com</span>
+      </a>
+      <a class="cc" href="https://linkedin.com/in/alexandre-pineau-poupelin" target="_blank">
+        <span class="cc-ico">&#128188;</span>
+        <span class="cc-lbl">LinkedIn</span>
+        <span class="cc-val">Voir le profil &rarr;</span>
+      </a>
+      <div class="cc">
+        <span class="cc-ico">&#128222;</span>
+        <span class="cc-lbl">Téléphone</span>
+        <span class="cc-val">Sur demande</span>
+      </div>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ══════════════════════════════════════════════════════════════
+# FOOTER
+# ══════════════════════════════════════════════════════════════
+
+st.markdown("""
+<div class="w">
+  <div class="foot">
+    Alexandre Pineau-Poupelin &middot; Growth Systems Engineer &middot; 2026
   </div>
 </div>
 """, unsafe_allow_html=True)
