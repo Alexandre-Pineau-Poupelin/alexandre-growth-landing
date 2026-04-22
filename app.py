@@ -55,8 +55,8 @@ html, body,
 
 .main .block-container,
 [data-testid="block-container"] {
-  max-width: 1204px !important;
-  padding: 0 52px !important;
+  max-width: 1100px !important;
+  padding: 0 24px !important;
   margin: 0 auto !important;
 }
 
@@ -89,7 +89,7 @@ html, body,
 }
 .sdesc {
   font-size: 16px; color: var(--t2);
-  line-height: 1.72; max-width: 720px;
+  line-height: 1.72; max-width: 680px;
   font-weight: 400; letter-spacing: -0.008em;
   margin: 0 auto; text-align: center;
 }
@@ -129,7 +129,7 @@ html, body,
 .hero-val {
   font-size: clamp(17px, 1.9vw, 20px);
   line-height: 1.72; color: var(--t2);
-  max-width: 680px; margin: 0 auto 52px;
+  max-width: 640px; margin: 0 auto 52px;
   font-weight: 400; letter-spacing: -0.01em; text-align: center;
 }
 .hero-val strong { color: var(--t1); font-weight: 500; }
@@ -203,7 +203,7 @@ p:not([class]) {
   color: var(--t2) !important; font-size: 16px !important;
   line-height: 1.72 !important; letter-spacing: -0.008em !important;
   text-align: center !important;
-  max-width: 720px !important; margin-left: auto !important; margin-right: auto !important;
+  max-width: 680px !important; margin-left: auto !important; margin-right: auto !important;
 }
 
 /* Actions sub-label: lone **bold** in a paragraph */
@@ -344,7 +344,7 @@ p:not([class]) {
 @media (max-width: 900px) {
   .main .block-container,
   [data-testid="block-container"] {
-    padding: 0 32px !important;
+    padding: 0 20px !important;
   }
 
   .sec, .sec-last { padding: 72px 0; }
