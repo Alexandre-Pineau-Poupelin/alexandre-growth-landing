@@ -76,6 +76,7 @@ html, body,
   font-size: 11px; font-weight: 600;
   letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--acc); margin-bottom: 16px; line-height: 1.4;
+  text-align: center;
 }
 
 /* ── Headings ── */
@@ -84,17 +85,19 @@ html, body,
   font-weight: 700; line-height: 1.1;
   letter-spacing: -0.028em;
   color: var(--t1); margin-bottom: 12px;
+  text-align: center;
 }
 .sdesc {
   font-size: 16px; color: var(--t2);
-  line-height: 1.72; max-width: 540px;
+  line-height: 1.72; max-width: 720px;
   font-weight: 400; letter-spacing: -0.008em;
+  margin: 0 auto; text-align: center;
 }
 
 /* ══════════════════════════════
    HERO
 ══════════════════════════════ */
-.hero { padding: 110px 0 96px; }
+.hero { padding: 110px 0 96px; text-align: center; }
 
 .badge {
   display: inline-flex; align-items: center; gap: 10px;
@@ -126,12 +129,12 @@ html, body,
 .hero-val {
   font-size: clamp(17px, 1.9vw, 20px);
   line-height: 1.72; color: var(--t2);
-  max-width: 580px; margin-bottom: 52px;
-  font-weight: 400; letter-spacing: -0.01em;
+  max-width: 680px; margin: 0 auto 52px;
+  font-weight: 400; letter-spacing: -0.01em; text-align: center;
 }
 .hero-val strong { color: var(--t1); font-weight: 500; }
 
-.btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: center; }
 .btn-p {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--acc); color: #fff !important;
@@ -183,6 +186,7 @@ h5 {
   font-size: 11px !important; font-weight: 600 !important;
   letter-spacing: 0.18em !important; text-transform: uppercase !important;
   color: var(--acc) !important; margin: 0 0 12px !important; line-height: 1.4 !important;
+  text-align: center !important;
 }
 
 /* Section title from ### markdown */
@@ -191,12 +195,15 @@ h3 {
   font-weight: 700 !important; line-height: 1.1 !important;
   letter-spacing: -0.028em !important;
   color: var(--t1) !important; margin: 4px 0 16px !important;
+  text-align: center !important;
 }
 
 /* Description paragraph (no class = native markdown) */
 p:not([class]) {
   color: var(--t2) !important; font-size: 16px !important;
   line-height: 1.72 !important; letter-spacing: -0.008em !important;
+  text-align: center !important;
+  max-width: 720px !important; margin-left: auto !important; margin-right: auto !important;
 }
 
 /* Actions sub-label: lone **bold** in a paragraph */
@@ -266,7 +273,7 @@ p:not([class]) {
 /* ══════════════════════════════
    STACK
 ══════════════════════════════ */
-.pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+.pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; justify-content: center; }
 .pill {
   background: var(--surf); border: 1px solid var(--bdr);
   border-radius: 8px; padding: 11px 20px;
