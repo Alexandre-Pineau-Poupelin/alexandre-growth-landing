@@ -7,6 +7,36 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# ── Centrage global ──────────────────────────────────────────
+st.markdown("""
+<style>
+.main .block-container {
+    max-width: 860px !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+h1, h2, h3 { text-align: center !important; }
+.section-desc {
+    text-align: center !important;
+    max-width: 640px;
+    margin: 0 auto 2rem auto;
+}
+.section-label {
+    text-align: center !important;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: #7C6AFF;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.stColumn p, .stColumn li { text-align: left !important; }
+[data-testid="metric-container"] { text-align: center !important; }
+[data-testid="stMetricValue"] { justify-content: center !important; }
+</style>
+""", unsafe_allow_html=True)
+
 # ══════════════════════════════════════════════════════════════
 # DESIGN SYSTEM
 # ══════════════════════════════════════════════════════════════
@@ -558,48 +588,73 @@ st.markdown("""
 
 
 # ══════════════════════════════════════════════════════════════
-# PROJET CLÉ — Native Streamlit (zéro risque HTML brut)
+# PROJET CLÉ
 # ══════════════════════════════════════════════════════════════
 
-st.divider()
+st.markdown("""
+<div style="max-width:860px; margin:0 auto; padding: 2rem 0; border-top:1px solid rgba(255,255,255,0.07);">
+  <p style="text-align:center; color:#7C6AFF; font-size:0.75rem;
+     letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">
+    CAS CONCRET · B2B · PME TECH
+  </p>
+  <h2 style="text-align:center; font-size:1.75rem; margin-bottom:1rem; color:#ededf5;">
+    Construction d'un système d'acquisition B2B — de zéro à 368 K€
+  </h2>
+  <p style="text-align:center; color:#8888b0; max-width:620px;
+     margin:0 auto 2rem auto; line-height:1.7; font-size:0.95rem;">
+    Point de départ : aucun système structuré, pas de pipeline exploitable.
+    Mission : concevoir un système d'acquisition B2B capable de générer,
+    qualifier et transmettre des leads directement exploitables par les équipes sales.
+  </p>
 
-st.markdown("##### Cas concret · B2B · PME Tech")
-st.markdown("### Construction d'un système d'acquisition B2B — de zéro à 368 K€")
-st.markdown(
-    "Point de départ : aucun système structuré, pas de pipeline exploitable. "
-    "Mission : concevoir un système d'acquisition B2B capable de générer, qualifier "
-    "et transmettre des leads directement exploitables par les équipes sales."
-)
+  <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
+    <div style="flex:1; min-width:140px; background:#0d0d1a; border:1px solid rgba(255,255,255,0.07);
+         border-radius:10px; padding:1.2rem; text-align:center;">
+      <p style="color:#7C6AFF; font-size:0.65rem; letter-spacing:0.1em;
+         text-transform:uppercase; margin:0 0 0.4rem 0;">MQL générés</p>
+      <p style="font-size:1.9rem; font-weight:800; margin:0; color:#ededf5; letter-spacing:-0.03em;">322</p>
+    </div>
+    <div style="flex:1; min-width:140px; background:#0d0d1a; border:1px solid rgba(255,255,255,0.07);
+         border-radius:10px; padding:1.2rem; text-align:center;">
+      <p style="color:#7C6AFF; font-size:0.65rem; letter-spacing:0.1em;
+         text-transform:uppercase; margin:0 0 0.4rem 0;">Clients signés</p>
+      <p style="font-size:1.9rem; font-weight:800; margin:0; color:#ededf5; letter-spacing:-0.03em;">24</p>
+    </div>
+    <div style="flex:1; min-width:140px; background:#0d0d1a; border:1px solid rgba(255,255,255,0.07);
+         border-radius:10px; padding:1.2rem; text-align:center;">
+      <p style="color:#7C6AFF; font-size:0.65rem; letter-spacing:0.1em;
+         text-transform:uppercase; margin:0 0 0.4rem 0;">CA généré</p>
+      <p style="font-size:1.9rem; font-weight:800; margin:0; color:#ededf5; letter-spacing:-0.03em;">368 K€</p>
+    </div>
+    <div style="flex:1; min-width:140px; background:#0d0d1a; border:1px solid rgba(255,255,255,0.07);
+         border-radius:10px; padding:1.2rem; text-align:center;">
+      <p style="color:#7C6AFF; font-size:0.65rem; letter-spacing:0.1em;
+         text-transform:uppercase; margin:0 0 0.4rem 0;">Taux MQL → client</p>
+      <p style="font-size:1.9rem; font-weight:800; margin:0; color:#ededf5; letter-spacing:-0.03em;">7,45 %</p>
+    </div>
+  </div>
 
-st.write("")
+  <p style="text-align:center; color:#44445a; font-size:0.7rem; font-weight:700;
+     letter-spacing:0.18em; text-transform:uppercase; margin-bottom:1rem;">
+    Ce que j'ai mis en place
+  </p>
 
-_m1, _m2, _m3, _m4 = st.columns(4)
-_m1.metric("MQL générés",       "322")
-_m2.metric("Clients signés",    "24")
-_m3.metric("CA généré",         "368 K€")
-_m4.metric("Taux MQL → client", "7,45 %")
-
-st.write("")
-st.markdown("**Ce que j'ai mis en place**")
-st.write("")
-
-_a1, _a2 = st.columns(2)
-with _a1:
-    st.markdown(
-        "- Sourcing multi-sources + enrichissement data\n"
-        "- Segmentation par ICP + lead scoring\n"
-        "- Séquences email automatisées\n"
-        "- Activation multicanale (email + calls)"
-    )
-with _a2:
-    st.markdown(
-        "- Intégration CRM HubSpot complète\n"
-        "- Orchestration des workflows via n8n\n"
-        "- Alignement marketing → sales\n"
-        "- Transmission des leads qualifiés en temps réel"
-    )
-
-st.write("")
+  <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+    <div style="flex:1; min-width:240px;">
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Sourcing multi-sources + enrichissement data</p>
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Segmentation par ICP + lead scoring</p>
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Séquences email automatisées</p>
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Activation multicanale (email + calls)</p>
+    </div>
+    <div style="flex:1; min-width:240px;">
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Intégration CRM HubSpot complète</p>
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Orchestration des workflows via n8n</p>
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Alignement marketing → sales</p>
+      <p style="margin:0.4rem 0; color:#8888b0; font-size:0.9rem;">→ Transmission des leads qualifiés en temps réel</p>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════
