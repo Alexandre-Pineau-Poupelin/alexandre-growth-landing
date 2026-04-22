@@ -51,25 +51,86 @@ html, body,
   visibility: hidden !important;
 }
 
-/* Streamlit container: transparent wrapper — .col handles centering */
+/* Container: 860px centered column for all content */
 .main .block-container,
 [data-testid="block-container"],
 [data-testid="stMainBlockContainer"],
 .stMainBlockContainer {
-  max-width: 100% !important;
+  max-width: 860px !important;
   width: 100% !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  padding: 0 28px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
 }
 
 [data-testid="stMarkdown"] > div { margin-bottom: 0 !important; }
 
-/* ── Content column: each section self-centers ── */
+/* ── Native Streamlit — Projet Clé ── */
+hr {
+  border: none !important;
+  border-top: 1px solid var(--bdr) !important;
+  margin: 0 !important;
+}
+h5 {
+  font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: 0.2em !important; text-transform: uppercase !important;
+  color: var(--acc) !important; margin: 0 0 12px !important;
+  text-align: center !important;
+}
+h3 {
+  font-size: clamp(22px, 2.8vw, 32px) !important;
+  font-weight: 700 !important; line-height: 1.15 !important;
+  letter-spacing: -0.028em !important;
+  color: var(--t1) !important; margin: 4px 0 16px !important;
+  text-align: center !important;
+}
+p:not([class]) {
+  color: var(--t2) !important; font-size: 16px !important;
+  line-height: 1.72 !important; letter-spacing: -0.008em !important;
+  text-align: center !important;
+  max-width: 600px !important; margin-left: auto !important; margin-right: auto !important;
+}
+[data-testid="stMarkdown"] p strong:only-child {
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 0.16em !important; text-transform: uppercase !important;
+  color: var(--t3) !important;
+}
+[data-testid="stMetric"] {
+  background: var(--surf) !important;
+  border: 1px solid var(--bdr) !important;
+  border-radius: var(--r) !important;
+  padding: 22px 14px !important;
+  text-align: center !important;
+}
+[data-testid="stMetricValue"] div {
+  font-size: 28px !important; font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  color: var(--t1) !important; line-height: 1 !important;
+}
+[data-testid="stMetricLabel"] {
+  font-size: 11px !important; font-weight: 600 !important;
+  color: var(--t3) !important; text-align: center !important;
+  letter-spacing: 0.07em !important; text-transform: uppercase !important;
+}
+[data-testid="stMetricDelta"] { display: none !important; }
+[data-testid="stMarkdown"] ul {
+  padding: 0 !important; margin: 0 !important; list-style: none !important;
+}
+[data-testid="stMarkdown"] ul li {
+  padding: 9px 0 !important;
+  color: var(--t2) !important; font-size: 14px !important;
+  line-height: 1.55 !important; letter-spacing: -0.008em !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  list-style-type: '→  ' !important;
+}
+[data-testid="stMarkdown"] ul li:last-child { border-bottom: none !important; }
+
+/* ── Content column: fills block-container (centering above) ── */
 .col {
   width: 100%;
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 0 28px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -346,7 +407,10 @@ html, body,
    RESPONSIVE — tablet (≤ 900px)
 ══════════════════════════════ */
 @media (max-width: 900px) {
-  .col { padding: 0 22px; }
+  .main .block-container,
+  [data-testid="block-container"],
+  [data-testid="stMainBlockContainer"],
+  .stMainBlockContainer { padding: 0 22px !important; }
   .sec, .sec-last, .proj-sec { padding: 68px 0; }
 
   .cards, .skills { gap: 10px; }
@@ -365,7 +429,10 @@ html, body,
    RESPONSIVE — mobile (≤ 640px)
 ══════════════════════════════ */
 @media (max-width: 640px) {
-  .col { padding: 0 18px; }
+  .main .block-container,
+  [data-testid="block-container"],
+  [data-testid="stMainBlockContainer"],
+  .stMainBlockContainer { padding: 0 18px !important; }
   .sec, .sec-last, .proj-sec { padding: 52px 0; }
 
   .hero { padding: 64px 0 48px; }
@@ -376,8 +443,15 @@ html, body,
   .btn-p, .btn-s { justify-content: center; width: 100%; max-width: 280px; }
 
   .h2  { font-size: 22px !important; }
+  h3   { font-size: 20px !important; }
   .proj-title { font-size: 20px !important; }
   .sdesc, .proj-desc { max-width: 100% !important; font-size: 15px !important; }
+  p:not([class]) { max-width: 100% !important; font-size: 15px !important; }
+  [data-testid="stHorizontalBlock"] { flex-wrap: wrap !important; }
+  [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+    min-width: calc(50% - 7px) !important;
+    flex: 1 1 calc(50% - 7px) !important;
+  }
 
   .cards { flex-direction: column; }
   .card  { padding: 20px 22px; }
@@ -411,8 +485,13 @@ html, body,
    RESPONSIVE — small mobile (≤ 420px)
 ══════════════════════════════ */
 @media (max-width: 420px) {
-  .col { padding: 0 14px; }
+  .main .block-container,
+  [data-testid="block-container"],
+  [data-testid="stMainBlockContainer"],
+  .stMainBlockContainer { padding: 0 14px !important; }
   .hero-name { font-size: 30px !important; }
+  [data-testid="stMetric"] { padding: 18px 10px !important; }
+  [data-testid="stMetricValue"] div { font-size: 22px !important; }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -479,54 +558,48 @@ st.markdown("""
 
 
 # ══════════════════════════════════════════════════════════════
-# PROJET CLÉ — 100% HTML
+# PROJET CLÉ — Native Streamlit (zéro risque HTML brut)
 # ══════════════════════════════════════════════════════════════
 
-st.markdown("""
-<div class="col">
-  <div class="proj-sec" id="projet">
-    <span class="proj-eyebrow">Cas concret · B2B · PME Tech</span>
-    <h2 class="proj-title">Construction d&rsquo;un système d&rsquo;acquisition B2B &mdash; de zéro à 368 K€</h2>
-    <p class="proj-desc">Point de départ : aucun système structuré, pas de pipeline exploitable. Mission : concevoir un système d&rsquo;acquisition B2B capable de générer, qualifier et transmettre des leads directement exploitables par les équipes sales.</p>
+st.divider()
 
-    <div class="metrics-row">
-      <div class="metric">
-        <div class="m-val">322</div>
-        <div class="m-lbl">MQL générés</div>
-      </div>
-      <div class="metric">
-        <div class="m-val">24</div>
-        <div class="m-lbl">Clients signés</div>
-      </div>
-      <div class="metric">
-        <div class="m-val">368 K€</div>
-        <div class="m-lbl">CA généré</div>
-      </div>
-      <div class="metric">
-        <div class="m-val">7,45 %</div>
-        <div class="m-lbl">Taux MQL &rarr; client</div>
-      </div>
-    </div>
+st.markdown("##### Cas concret · B2B · PME Tech")
+st.markdown("### Construction d'un système d'acquisition B2B — de zéro à 368 K€")
+st.markdown(
+    "Point de départ : aucun système structuré, pas de pipeline exploitable. "
+    "Mission : concevoir un système d'acquisition B2B capable de générer, qualifier "
+    "et transmettre des leads directement exploitables par les équipes sales."
+)
 
-    <span class="proj-sub">Ce que j&rsquo;ai mis en place</span>
+st.write("")
 
-    <div class="proj-actions">
-      <div class="proj-col">
-        <div class="proj-item"><span class="proj-arrow">→</span>Sourcing multi-sources + enrichissement data</div>
-        <div class="proj-item"><span class="proj-arrow">→</span>Segmentation par ICP + lead scoring</div>
-        <div class="proj-item"><span class="proj-arrow">→</span>Séquences email automatisées</div>
-        <div class="proj-item"><span class="proj-arrow">→</span>Activation multicanale (email + calls)</div>
-      </div>
-      <div class="proj-col">
-        <div class="proj-item"><span class="proj-arrow">→</span>Intégration CRM HubSpot complète</div>
-        <div class="proj-item"><span class="proj-arrow">→</span>Orchestration des workflows via n8n</div>
-        <div class="proj-item"><span class="proj-arrow">→</span>Alignement marketing &rarr; sales</div>
-        <div class="proj-item"><span class="proj-arrow">→</span>Transmission des leads qualifiés en temps réel</div>
-      </div>
-    </div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+_m1, _m2, _m3, _m4 = st.columns(4)
+_m1.metric("MQL générés",       "322")
+_m2.metric("Clients signés",    "24")
+_m3.metric("CA généré",         "368 K€")
+_m4.metric("Taux MQL → client", "7,45 %")
+
+st.write("")
+st.markdown("**Ce que j'ai mis en place**")
+st.write("")
+
+_a1, _a2 = st.columns(2)
+with _a1:
+    st.markdown(
+        "- Sourcing multi-sources + enrichissement data\n"
+        "- Segmentation par ICP + lead scoring\n"
+        "- Séquences email automatisées\n"
+        "- Activation multicanale (email + calls)"
+    )
+with _a2:
+    st.markdown(
+        "- Intégration CRM HubSpot complète\n"
+        "- Orchestration des workflows via n8n\n"
+        "- Alignement marketing → sales\n"
+        "- Transmission des leads qualifiés en temps réel"
+    )
+
+st.write("")
 
 
 # ══════════════════════════════════════════════════════════════

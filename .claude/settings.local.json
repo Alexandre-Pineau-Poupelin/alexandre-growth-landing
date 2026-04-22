@@ -9,7 +9,9 @@
       "Bash(python3 -m streamlit run /Users/alexandrepineaupoupelin/Developer/Claude/cv_site/app.py --server.headless true --server.port 8501)",
       "Bash(pkill -f \"streamlit run\")",
       "Read(//Users/alexandrepineaupoupelin/Developer/**)",
-      "Read(//Users/alexandrepineaupoupelin/**)"
+      "Read(//Users/alexandrepineaupoupelin/**)",
+      "Bash(python3 -m streamlit run app.py --server.headless true)",
+      "Bash(curl -s http://localhost:8501)"
     ]
   }
 }
