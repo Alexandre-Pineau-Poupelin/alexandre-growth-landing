@@ -54,21 +54,34 @@ html, body,
 }
 
 .main .block-container,
-[data-testid="block-container"] {
-  max-width: 1100px !important;
-  padding: 0 24px !important;
-  margin: 0 auto !important;
+[data-testid="block-container"],
+[data-testid="stMainBlockContainer"],
+.stMainBlockContainer,
+section.main > div {
+  max-width: 980px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  padding-top: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
 }
 
 /* Remove Streamlit's default markdown spacing */
 [data-testid="stMarkdown"] > div { margin-bottom: 0 !important; }
 
-/* ── Page width wrapper (passthrough — centering handled by block-container) ── */
-.w { max-width: 100%; margin: 0; padding: 0; }
+/* ── Page width wrapper ── */
+.w { width: 100%; max-width: 100%; margin: 0; padding: 0; box-sizing: border-box; }
 
 /* ── Section ── */
-.sec { padding: 96px 0; border-top: 1px solid var(--bdr); }
-.sec-last { padding: 96px 0 0; border-top: 1px solid var(--bdr); }
+.sec {
+  padding: 96px 0; border-top: 1px solid var(--bdr);
+  width: 100%; max-width: 100%; box-sizing: border-box;
+}
+.sec-last {
+  padding: 96px 0 0; border-top: 1px solid var(--bdr);
+  width: 100%; max-width: 100%; box-sizing: border-box;
+}
 
 /* ── Eyebrow ── */
 .ey {
@@ -89,7 +102,7 @@ html, body,
 }
 .sdesc {
   font-size: 16px; color: var(--t2);
-  line-height: 1.72; max-width: 680px;
+  line-height: 1.72; max-width: 640px;
   font-weight: 400; letter-spacing: -0.008em;
   margin: 0 auto; text-align: center;
 }
@@ -97,7 +110,10 @@ html, body,
 /* ══════════════════════════════
    HERO
 ══════════════════════════════ */
-.hero { padding: 110px 0 96px; text-align: center; }
+.hero {
+  padding: 110px 0 96px; text-align: center;
+  width: 100%; max-width: 100%; box-sizing: border-box;
+}
 
 .badge {
   display: inline-flex; align-items: center; gap: 10px;
@@ -129,7 +145,7 @@ html, body,
 .hero-val {
   font-size: clamp(17px, 1.9vw, 20px);
   line-height: 1.72; color: var(--t2);
-  max-width: 640px; margin: 0 auto 52px;
+  max-width: 620px; margin: 0 auto 48px;
   font-weight: 400; letter-spacing: -0.01em; text-align: center;
 }
 .hero-val strong { color: var(--t1); font-weight: 500; }
@@ -203,7 +219,7 @@ p:not([class]) {
   color: var(--t2) !important; font-size: 16px !important;
   line-height: 1.72 !important; letter-spacing: -0.008em !important;
   text-align: center !important;
-  max-width: 680px !important; margin-left: auto !important; margin-right: auto !important;
+  max-width: 640px !important; margin-left: auto !important; margin-right: auto !important;
 }
 
 /* Actions sub-label: lone **bold** in a paragraph */
@@ -343,8 +359,12 @@ p:not([class]) {
 ══════════════════════════════ */
 @media (max-width: 900px) {
   .main .block-container,
-  [data-testid="block-container"] {
-    padding: 0 20px !important;
+  [data-testid="block-container"],
+  [data-testid="stMainBlockContainer"],
+  .stMainBlockContainer,
+  section.main > div {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .sec, .sec-last { padding: 72px 0; }
@@ -371,8 +391,12 @@ p:not([class]) {
 @media (max-width: 640px) {
   /* Layout */
   .main .block-container,
-  [data-testid="block-container"] {
-    padding: 0 20px !important;
+  [data-testid="block-container"],
+  [data-testid="stMainBlockContainer"],
+  .stMainBlockContainer,
+  section.main > div {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   /* Sections */
@@ -436,8 +460,12 @@ p:not([class]) {
 ══════════════════════════════ */
 @media (max-width: 420px) {
   .main .block-container,
-  [data-testid="block-container"] {
-    padding: 0 16px !important;
+  [data-testid="block-container"],
+  [data-testid="stMainBlockContainer"],
+  .stMainBlockContainer,
+  section.main > div {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 
   .hero-name { font-size: 34px !important; }
