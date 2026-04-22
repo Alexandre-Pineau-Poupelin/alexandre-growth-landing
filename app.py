@@ -459,9 +459,8 @@ st.markdown("""
     <p class="hero-role">Growth Systems Engineer</p>
     <h1 class="hero-name">Alexandre<br>Pineau-Poupelin</h1>
     <p class="hero-val">
-      Je conçois des <strong>systèmes d&rsquo;acquisition multi-canaux</strong> &mdash; inbound, outbound, automation &mdash;
-      qui génèrent, qualifient et convertissent des leads en revenu.<br>
-      Approche orientée <strong>performance, automatisation et scalabilité</strong>.
+      J&rsquo;assemble <strong>acquisition, automation et conversion</strong> en systèmes scalables.<br>
+      De la génération à la qualification jusqu&rsquo;au CRM, chaque étape est conçue pour produire du pipeline exploitable par les équipes sales.
     </p>
     <div class="btns">
       <a href="#projet" class="btn-p">&#9889; Voir le projet clé</a>
@@ -481,7 +480,7 @@ st.markdown("""
   <div class="sec">
     <span class="ey">Approche</span>
     <h2 class="h2">Je construis des systèmes, pas des campagnes</h2>
-    <p class="sdesc">Chaque levier est pensé en relation avec les autres &mdash; acquisition, qualification, conversion, revenu forment un seul système cohérent.</p>
+    <p class="sdesc">La différence entre une campagne et un système : l&rsquo;une s&rsquo;arrête dès qu&rsquo;on coupe le budget. L&rsquo;autre tourne, mesure et s&rsquo;améliore seul.</p>
     <div class="cards">
       <div class="card">
         <span class="c-ico">🔗</span>
@@ -491,7 +490,7 @@ st.markdown("""
       <div class="card">
         <span class="c-ico">⚙️</span>
         <div class="c-ttl">Automatisation sans friction</div>
-        <div class="c-dsc">Workflows orchestrés via n8n et APIs pour scaler sans dépendance aux ressources humaines.</div>
+        <div class="c-dsc">Chaque tâche répétable est automatisée. Le pipeline grossit sans avoir besoin de recruter.</div>
       </div>
       <div class="card">
         <span class="c-ico">📊</span>
@@ -501,7 +500,7 @@ st.markdown("""
       <div class="card">
         <span class="c-ico">🔁</span>
         <div class="c-ttl">Itération continue</div>
-        <div class="c-dsc">Test &rarr; mesure &rarr; optimisation. Cycle court pour valider rapidement et capitaliser sur ce qui fonctionne.</div>
+        <div class="c-dsc">Ce qui ne fonctionne pas, on coupe vite. Ce qui marche, on accélère. Décisions rapides, cycle court.</div>
       </div>
     </div>
   </div>
@@ -520,10 +519,10 @@ st.markdown("""
 st.divider()
 
 st.markdown("##### Cas concret · B2B · PME Tech")
-st.markdown("### Construction d'un système d'acquisition B2B automatisé")
+st.markdown("### Construction d'un système d'acquisition B2B — de zéro à 368 K€")
 st.markdown(
-    "Structuration complète de l'acquisition dans une PME tech (mobilité électrique) "
-    "avec un objectif de pipeline qualifié et scalable."
+    "Point de départ : aucun système structuré, pas de pipeline exploitable. "
+    "Mission : concevoir un système d'acquisition B2B capable de générer, qualifier et transmettre des leads directement exploitables par les équipes sales."
 )
 
 st.write("")
@@ -609,7 +608,7 @@ st.markdown("""
   <div class="sec">
     <span class="ey">Stack</span>
     <h2 class="h2">Outils &amp; technologies</h2>
-    <p class="sdesc">Les outils que j&rsquo;utilise quotidiennement pour concevoir et opérer des systèmes d&rsquo;acquisition.</p>
+    <p class="sdesc">Une stack utilisée pour orchestrer le sourcing, la qualification, l&rsquo;automation et le suivi CRM.</p>
     <div class="pills">
       <span class="pill">⚙️&nbsp; n8n</span>
       <span class="pill">🔶&nbsp; HubSpot</span>
@@ -642,7 +641,7 @@ st.markdown("""
         <span class="rpill">Growth Systems Engineer</span>
       </div>
       <div class="btns" style="justify-content:center;">
-        <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-p">&#9993; Discutons-en</a>
+        <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-p">&#9993; M&rsquo;écrire directement</a>
         <a href="https://linkedin.com/in/alexandre-pineau-poupelin" class="btn-s">LinkedIn &rarr;</a>
       </div>
     </div>
@@ -660,7 +659,7 @@ st.markdown("""
   <div class="sec-last">
     <span class="ey">Contact</span>
     <h2 class="h2">Prenons contact</h2>
-    <p class="sdesc">Disponible pour des échanges sur des projets growth, automation ou systèmes d&rsquo;acquisition.</p>
+    <p class="sdesc">Vous recrutez sur un rôle growth, automation ou marketing ops&nbsp;? Échangeons.</p>
     <div class="contacts">
       <a class="cc" href="mailto:alexandre.pineaupoupelin@gmail.com">
         <span class="cc-ico">&#9993;&#65039;</span>
