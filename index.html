@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alexandre Pineau-Poupelin — Growth Systems Engineer</title>
+  <meta name="description" content="Growth Systems Engineer — acquisition, automation, CRM. Je construis des systèmes d'acquisition B2B scalables." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --bg:      #0a0a0a;
+      --surf:    #111111;
+      --surf2:   #161616;
+      --bdr:     #1e1e1e;
+      --acc:     #7C6AFF;
+      --acc-lo:  rgba(124,106,255,0.12);
+      --text:    #ffffff;
+      --muted:   #888888;
+      --muted2:  #555555;
+      --grn:     #22c55e;
+      --font:    'Inter', system-ui, -apple-system, sans-serif;
+      --r:       10px;
+      --rL:      14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    p  { margin: 0; }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--bdr);
+      text-align: center;
+    }
+
+    /* ── Typography ── */
+    .section-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--acc);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 0.97;
+      letter-spacing: -0.04em;
+      margin: 0.5rem 0 1.5rem;
+      color: var(--text);
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin: 0.4rem 0 1rem;
+      color: var(--text);
+    }
+
+    .section-desc {
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      color: var(--muted);
+      line-height: 1.72;
+      font-size: 1rem;
+    }
+
+    /* ── Buttons ── */
+    .btns {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--acc);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--r);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background .18s, transform .14s, box-shadow .18s;
+      font-family: var(--font);
+    }
+    .btn-primary:hover {
+      background: #6355e8;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(124,106,255,0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--bdr);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--r);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: border-color .18s, color .18s, transform .14s;
+      font-family: var(--font);
+    }
+    .btn-outline:hover {
+      border-color: rgba(124,106,255,0.4);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--rL);
+      padding: 1.6rem 1.8rem;
+      text-align: left;
+      transition: border-color .2s, background .18s;
+    }
+    .card:hover {
+      border-color: rgba(124,106,255,0.22);
+      background: var(--surf2);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 2.5rem;
+    }
+
+    /* ── Hero ── */
+    #hero {
+      padding: 6.5rem 0 5.5rem;
+      border-top: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(34,197,94,0.07);
+      border: 1px solid rgba(34,197,94,0.18);
+      border-radius: 999px;
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #86efac;
+      margin-bottom: 2.2rem;
+    }
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--grn);
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 2.8s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      50%      { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+
+    .hero-role {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--acc);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .hero-val {
+      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 560px;
+      margin: 0 auto 2.6rem;
+    }
+    .hero-val strong { color: var(--text); font-weight: 500; }
+
+    /* ── Approche cards ── */
+    .card-ico  { font-size: 1.25rem; margin-bottom: 0.8rem; display: block; }
+    .card-ttl  { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.45rem; letter-spacing: -0.01em; }
+    .card-dsc  { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Projet clé ── */
+    #projet .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--r);
+      padding: 1.3rem 1rem;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .metric-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--acc);
+    }
+
+    .actions-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-align: center;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 1.5rem;
+      text-align: left;
+    }
+    .action-item {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .action-item:last-child { border-bottom: none; }
+    .action-arrow { color: var(--acc); flex-shrink: 0; opacity: 0.7; }
+
+    /* ── Compétences ── */
+    .sg-lbl {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acc);
+      margin-bottom: 1rem;
+    }
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--acc);
+      border-radius: 50%;
+      flex-shrink: 0;
+      opacity: 0.55;
+    }
+
+    /* ── Stack badges ── */
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.8rem;
+    }
+    .badge {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: 999px;
+      padding: 0.45rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: border-color .18s, color .18s;
+      cursor: default;
+    }
+    .badge:hover { border-color: rgba(124,106,255,0.3); color: var(--text); }
+
+    /* ── Objectif ── */
+    .obj-box {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--rL);
+      padding: 3.5rem 3rem;
+    }
+
+    .role-tags {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .role-tag {
+      background: var(--acc-lo);
+      border: 1px solid rgba(124,106,255,0.2);
+      border-radius: 999px;
+      padding: 0.4rem 1.1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #b3aaff;
+    }
+
+    /* ── Contact ── */
+    .contacts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-top: 2.5rem;
+    }
+    .cc {
+      background: var(--surf);
+      border: 1px solid var(--bdr);
+      border-radius: var(--rL);
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: border-color .18s, transform .14s, background .18s;
+    }
+    .cc:hover {
+      border-color: rgba(124,106,255,0.28);
+      background: var(--surf2);
+      transform: translateY(-2px);
+    }
+    .cc-ico  { font-size: 1.5rem; margin-bottom: 0.8rem; display: block; }
+    .cc-lbl  {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      margin-bottom: 0.5rem;
+    }
+    .cc-val  { font-size: 0.85rem; color: var(--acc); font-weight: 500; line-height: 1.4; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--bdr);
+      padding: 2.2rem 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted2);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .grid-2   { grid-template-columns: 1fr; }
+      #projet .metrics { grid-template-columns: 1fr 1fr; }
+      .actions-grid    { grid-template-columns: 1fr; }
+      .contacts { grid-template-columns: 1fr; }
+      .obj-box  { padding: 2.5rem 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.2rem; }
+      section    { padding: 3.5rem 0; }
+      #hero      { padding: 4rem 0 3rem; }
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.4rem; }
+      #projet .metrics { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+      .metric-value    { font-size: 1.6rem; }
+      .btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 280px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="hero-dot"></span>
+      Disponible · Ouvert aux opportunités CDI
+    </div>
+    <span class="hero-role">Growth Systems Engineer</span>
+    <h1>Alexandre<br>Pineau-Poupelin</h1>
+    <p class="hero-val">
+      J'assemble <strong>acquisition, automation et conversion</strong> en systèmes scalables.<br>
+      De la génération à la qualification jusqu'au CRM, chaque étape est conçue
+      pour produire du pipeline exploitable par les équipes sales.
+    </p>
+    <div class="btns">
+      <a href="#projet" class="btn-primary">⚡ Voir le projet clé</a>
+      <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-outline">Me contacter →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     APPROCHE
+════════════════════════════════ -->
+<section id="approche">
+  <div class="container">
+    <span class="section-label">Approche</span>
+    <h2>Je construis des systèmes, pas des campagnes</h2>
+    <p class="section-desc">La différence entre une campagne et un système : l'une s'arrête dès qu'on coupe le budget. L'autre tourne, mesure et s'améliore seul.</p>
+    <div class="grid-2">
+      <div class="card">
+        <span class="card-ico">🔗</span>
+        <div class="card-ttl">Système end-to-end</div>
+        <div class="card-dsc">Acquisition → qualification → conversion → revenu. Chaque étape est connectée et mesurée.</div>
+      </div>
+      <div class="card">
+        <span class="card-ico">⚙️</span>
+        <div class="card-ttl">Automatisation sans friction</div>
+        <div class="card-dsc">Chaque tâche répétable est automatisée. Le pipeline grossit sans avoir besoin de recruter.</div>
+      </div>
+      <div class="card">
+        <span class="card-ico">📊</span>
+        <div class="card-ttl">Data-driven</div>
+        <div class="card-dsc">Chaque décision s'appuie sur la donnée. Pas de vanity metrics — que du pipeline et du revenu.</div>
+      </div>
+      <div class="card">
+        <span class="card-ico">🔁</span>
+        <div class="card-ttl">Itération continue</div>
+        <div class="card-dsc">Ce qui ne fonctionne pas, on coupe vite. Ce qui marche, on accélère. Décisions rapides, cycle court.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     PROJET CLÉ
+════════════════════════════════ -->
+<section id="projet">
+  <div class="container">
+    <span class="section-label">Cas concret · B2B · PME Tech</span>
+    <h2>Construction d'un système d'acquisition B2B — de zéro à 368 K€</h2>
+    <p class="section-desc">Point de départ : aucun système structuré, pas de pipeline exploitable. Mission : concevoir un système d'acquisition B2B capable de générer, qualifier et transmettre des leads directement exploitables par les équipes sales.</p>
+
+    <div class="metrics">
+      <div class="metric">
+        <span class="metric-value">322</span>
+        <span class="metric-label">MQL générés</span>
+      </div>
+      <div class="metric">
+        <span class="metric-value">24</span>
+        <span class="metric-label">Clients signés</span>
+      </div>
+      <div class="metric">
+        <span class="metric-value">368 K€</span>
+        <span class="metric-label">CA généré</span>
+      </div>
+      <div class="metric">
+        <span class="metric-value">7,45 %</span>
+        <span class="metric-label">Taux MQL → client</span>
+      </div>
+    </div>
+
+    <span class="actions-label">Ce que j'ai mis en place</span>
+
+    <div class="actions-grid">
+      <div class="action-item"><span class="action-arrow">→</span>Sourcing multi-sources + enrichissement data</div>
+      <div class="action-item"><span class="action-arrow">→</span>Intégration CRM HubSpot complète</div>
+      <div class="action-item"><span class="action-arrow">→</span>Segmentation par ICP + lead scoring</div>
+      <div class="action-item"><span class="action-arrow">→</span>Orchestration des workflows via n8n</div>
+      <div class="action-item"><span class="action-arrow">→</span>Séquences email automatisées</div>
+      <div class="action-item"><span class="action-arrow">→</span>Alignement marketing → sales</div>
+      <div class="action-item"><span class="action-arrow">→</span>Activation multicanale (email + calls)</div>
+      <div class="action-item"><span class="action-arrow">→</span>Transmission des leads qualifiés en temps réel</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     COMPÉTENCES
+════════════════════════════════ -->
+<section id="competences">
+  <div class="container">
+    <span class="section-label">Compétences</span>
+    <h2>Ce que je maîtrise</h2>
+    <div class="grid-2" style="margin-top:2.5rem;">
+      <div class="card">
+        <span class="sg-lbl">Acquisition</span>
+        <div class="skill-row"><span class="skill-dot"></span>Google Ads (Search, Performance Max)</div>
+        <div class="skill-row"><span class="skill-dot"></span>SEO (stratégie + contenu)</div>
+        <div class="skill-row"><span class="skill-dot"></span>Outbound (cold email, LinkedIn)</div>
+      </div>
+      <div class="card">
+        <span class="sg-lbl">Automation</span>
+        <div class="skill-row"><span class="skill-dot"></span>n8n (workflows complexes)</div>
+        <div class="skill-row"><span class="skill-dot"></span>CRM automation (HubSpot)</div>
+        <div class="skill-row"><span class="skill-dot"></span>Enrichissement data &amp; APIs</div>
+        <div class="skill-row"><span class="skill-dot"></span>Intégrations &amp; Webhooks</div>
+      </div>
+      <div class="card">
+        <span class="sg-lbl">Funnel &amp; Conversion</span>
+        <div class="skill-row"><span class="skill-dot"></span>Structuration MQL → SQL → clients</div>
+        <div class="skill-row"><span class="skill-dot"></span>Optimisation de conversion</div>
+        <div class="skill-row"><span class="skill-dot"></span>UX &amp; parcours utilisateur</div>
+      </div>
+      <div class="card">
+        <span class="sg-lbl">Data</span>
+        <div class="skill-row"><span class="skill-dot"></span>Tracking (GA4, GTM)</div>
+        <div class="skill-row"><span class="skill-dot"></span>Analyse de performance</div>
+        <div class="skill-row"><span class="skill-dot"></span>Dashboards &amp; reporting</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     STACK
+════════════════════════════════ -->
+<section id="stack">
+  <div class="container">
+    <span class="section-label">Stack</span>
+    <h2>Outils &amp; technologies</h2>
+    <p class="section-desc">Une stack utilisée pour orchestrer le sourcing, la qualification, l'automation et le suivi CRM.</p>
+    <div class="badges">
+      <span class="badge">⚙️ n8n</span>
+      <span class="badge">🔶 HubSpot</span>
+      <span class="badge">📢 Google Ads</span>
+      <span class="badge">🔍 SEO</span>
+      <span class="badge">📧 Brevo</span>
+      <span class="badge">🎯 GetLead</span>
+      <span class="badge">📋 Airtable</span>
+      <span class="badge">🤖 LLMs / IA</span>
+      <span class="badge">☁️ n8n Cloud</span>
+      <span class="badge">🔌 APIs data</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     OBJECTIF
+════════════════════════════════ -->
+<section id="objectif">
+  <div class="container">
+    <div class="obj-box">
+      <span class="section-label">Objectif</span>
+      <h2>Prêt à construire le prochain<br>système d'acquisition</h2>
+      <p class="section-desc" style="margin-bottom:1.8rem;">Je recherche un CDI dans une startup ou scale-up avec de vrais enjeux d'acquisition — là où la data et les systèmes construisent, pas le marketing.</p>
+      <div class="role-tags">
+        <span class="role-tag">Growth Engineer</span>
+        <span class="role-tag">Automation Engineer</span>
+        <span class="role-tag">Growth Systems Engineer</span>
+      </div>
+      <div class="btns">
+        <a href="mailto:alexandre.pineaupoupelin@gmail.com" class="btn-primary">✉ M'écrire directement</a>
+        <a href="https://calendly.com/alexandre-pineaupoupelin/30min" target="_blank" rel="noopener" class="btn-outline">📅 Planifier un échange</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CONTACT
+════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <span class="section-label">Contact</span>
+    <h2>Prenons contact</h2>
+    <p class="section-desc">Vous recrutez sur un rôle growth, automation ou marketing ops ? Échangeons.</p>
+    <div class="contacts">
+      <a class="cc" href="mailto:alexandre.pineaupoupelin@gmail.com">
+        <span class="cc-ico">✉️</span>
+        <span class="cc-lbl">Email</span>
+        <span class="cc-val">alexandre.pineaupoupelin@gmail.com</span>
+      </a>
+      <a class="cc" href="https://calendly.com/alexandre-pineaupoupelin/30min" target="_blank" rel="noopener">
+        <span class="cc-ico">📅</span>
+        <span class="cc-lbl">Prendre RDV</span>
+        <span class="cc-val">30 min sur Calendly →</span>
+      </a>
+      <div class="cc">
+        <span class="cc-ico">📞</span>
+        <span class="cc-lbl">Téléphone</span>
+        <span class="cc-val">Sur demande</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer>
+  <div class="container">
+    Alexandre Pineau-Poupelin · Growth Systems Engineer · 2026
+  </div>
+</footer>
+
+</body>
+</html>
